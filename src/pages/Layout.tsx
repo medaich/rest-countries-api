@@ -1,10 +1,16 @@
 import { Outlet } from "react-router";
+import Header from "../components/Header";
+import Wrapper from "../components/Wrapper";
 
 const Layout = () => {
   return (
-    <div>
-      <h1>You're in the Layout</h1>
-      <Outlet />
+    <div className="h-dvh ">
+      <Header />
+      <main>
+        <Wrapper>
+          <Outlet />
+        </Wrapper>
+      </main>
     </div>
   );
 };
