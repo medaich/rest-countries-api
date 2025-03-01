@@ -3,12 +3,15 @@ import {
   ReactNode,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
 interface CountriesContextType {
   countries: Country[];
   error: string;
+  setRegion: React.Dispatch<React.SetStateAction<Region>>;
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface ApiCountry {
@@ -20,7 +23,14 @@ interface ApiCountry {
     official: string;
     common?: string;
   };
+  flags: {
+    svg: string;
+    png: string;
+    alt?: string;
+  };
 }
+
+type Region = "Africa" | "America" | "Asia" | "Europe" | "Oceania" | "All";
 
 export interface Country {
   countryId: string;
@@ -28,6 +38,10 @@ export interface Country {
   region: string;
   capital: string;
   name: string;
+  flag: {
+    url: string;
+    alt: string;
+  };
 }
 
 const CountriesContext = createContext<CountriesContextType | undefined>(
@@ -38,11 +52,29 @@ export function CountriesProvider({ children }: { children: ReactNode }) {
   const [countries, setCountries] = useState<Country[]>([]);
   const [error, setError] = useState<string>("");
 
+  const [region, setRegion] = useState<Region>("All"); //Filter by region
+  const [query, setQuery] = useState<string>(""); // Search query
+
+  const displayedCountries = useMemo(
+    () =>
+      countries
+        .filter(
+          (country) =>
+            country.name.toLowerCase().includes(query.toLowerCase()) &&
+            (region === "All" ||
+              country.region.toLowerCase() === region.toLowerCase())
+        )
+        .slice(0, 8),
+    [countries, query, region]
+  );
+
+  console.log(displayedCountries);
+
   useEffect(function () {
     async function getCountries() {
       try {
         const fetched = await fetch(
-          "https://restcountries.com/v3.1/all?fields=cca3,name,region,population,capital"
+          "https://restcountries.com/v3.1/all?fields=cca3,name,region,population,capital,flags"
         );
 
         if (!fetched.ok) {
@@ -50,16 +82,19 @@ export function CountriesProvider({ children }: { children: ReactNode }) {
         }
 
         const countrs = await fetched.json();
-        console.log(countrs);
 
         setCountries(
-          countrs.map((country: ApiCountry) => {
+          countrs.map((country: ApiCountry): Country => {
             return {
               population: country.population,
               region: country.region,
               countryId: country.cca3,
               capital: country?.capital?.[0] || "No capital",
-              name: country.name.official,
+              name: country.name.common || country.name.official,
+              flag: {
+                url: country.flags.svg,
+                alt: `flag of ${country.name.official}`,
+              },
             };
           })
         );
@@ -71,8 +106,11 @@ export function CountriesProvider({ children }: { children: ReactNode }) {
 
     getCountries();
   }, []);
+
   return (
-    <CountriesContext.Provider value={{ countries, error }}>
+    <CountriesContext.Provider
+      value={{ countries: displayedCountries, error, setRegion, setQuery }}
+    >
       {children}
     </CountriesContext.Provider>
   );
