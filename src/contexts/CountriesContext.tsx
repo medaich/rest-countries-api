@@ -14,7 +14,7 @@ interface CountriesContextType {
   setQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
-interface ApiCountry {
+export interface ApiCountry {
   cca3: string;
   population: number;
   region: string;
@@ -22,6 +22,7 @@ interface ApiCountry {
   name: {
     official: string;
     common?: string;
+    nativeName?: string;
   };
   flags: {
     svg: string;
@@ -30,7 +31,14 @@ interface ApiCountry {
   };
 }
 
-type Region = "Africa" | "America" | "Asia" | "Europe" | "Oceania" | "All";
+export type Region =
+  | "Africa"
+  | "Americas"
+  | "Asia"
+  | "Europe"
+  | "Antarctic"
+  | "Oceania"
+  | "All";
 
 export interface Country {
   countryId: string;
@@ -67,8 +75,6 @@ export function CountriesProvider({ children }: { children: ReactNode }) {
         .slice(0, 8),
     [countries, query, region]
   );
-
-  console.log(displayedCountries);
 
   useEffect(function () {
     async function getCountries() {
