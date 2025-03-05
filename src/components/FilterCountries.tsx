@@ -22,7 +22,7 @@ const FilterCountries = () => {
       <div className="relative">
         <select
           id="filter"
-          className="bg-white dark:bg-dark-blue shadow-mdappearance-none p-4 px-8 rounded w-full pr-10"
+          className="bg-white dark:bg-dark-blue shadow-md appearance-none p-4 px-8 rounded w-full pr-10"
           onChange={(e) => setRegion(e.target.value as Region)}
         >
           <option value="All">Filter by Region</option>
