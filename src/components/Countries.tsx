@@ -5,6 +5,8 @@ import Wrapper from "./Wrapper";
 const Countries = () => {
   const { countries, error } = useCountries();
 
+  console.error(error);
+
   return (
     <section>
       <h2 className="sr-only">Countries</h2>
