@@ -15,7 +15,7 @@ const config: Config = {
         white: "hsl(0, 0%, 100%)", // Dark Mode Text & Light Mode Elements
       },
       fontFamily: {
-        nunito: ["Nunito Sans", "serif"],
+        nunito: ["Nunito Sans", "sans serif"],
       },
     },
   },

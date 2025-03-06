@@ -4,7 +4,6 @@ import Wrapper from "./Wrapper";
 
 const Countries = () => {
   const { countries, error } = useCountries();
-  console.log(error);
 
   return (
     <section>

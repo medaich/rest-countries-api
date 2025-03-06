@@ -4,7 +4,7 @@ import Wrapper from "../components/Wrapper";
 
 const Layout = () => {
   return (
-    <div className="h-dvh">
+    <div className="min-h-dvh max-w-[2000px] m-auto">
       <Header />
       <main>
         <Wrapper>

@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <header className="bg-white dark:bg-dark-blue shadow">
       <Wrapper className="flex items-center justify-between">
-        <h1 className="font-[800] text-2xl max-sm:text-base">
+        <h1 className="font-extrabold text-2xl max-sm:text-base">
           Where in the world?
         </h1>
         <button

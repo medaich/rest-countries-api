@@ -13,12 +13,11 @@ const FilterCountries = () => {
   const { setRegion } = useCountries();
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block max-w-60">
       <label className="sr-only" htmlFor="filter">
         Filter by region
       </label>
 
-      {/* Select Container */}
       <div className="relative">
         <select
           id="filter"

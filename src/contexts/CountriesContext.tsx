@@ -12,6 +12,7 @@ interface CountriesContextType {
   error: string;
   setRegion: React.Dispatch<React.SetStateAction<Region>>;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
+  getCountryById: (countryId: string) => Country | undefined;
 }
 
 export interface ApiCountry {
@@ -22,7 +23,12 @@ export interface ApiCountry {
   name: {
     official: string;
     common?: string;
-    nativeName?: string;
+    nativeName: {
+      [key: string]: {
+        official: string;
+        common: string;
+      };
+    };
   };
   flags: {
     svg: string;
@@ -62,6 +68,10 @@ export function CountriesProvider({ children }: { children: ReactNode }) {
 
   const [region, setRegion] = useState<Region>("All"); //Filter by region
   const [query, setQuery] = useState<string>(""); // Search query
+
+  function getCountryById(countryId: string) {
+    return countries.find((country) => country.countryId === countryId);
+  }
 
   const displayedCountries = useMemo(
     () =>
@@ -115,7 +125,13 @@ export function CountriesProvider({ children }: { children: ReactNode }) {
 
   return (
     <CountriesContext.Provider
-      value={{ countries: displayedCountries, error, setRegion, setQuery }}
+      value={{
+        countries: displayedCountries,
+        error,
+        setRegion,
+        setQuery,
+        getCountryById,
+      }}
     >
       {children}
     </CountriesContext.Provider>
