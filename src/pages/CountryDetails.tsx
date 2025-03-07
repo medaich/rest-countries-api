@@ -4,6 +4,7 @@ import Wrapper from "../components/Wrapper";
 import { useGetCountry } from "../hooks/useGetCountry";
 import { useCountries } from "../contexts/CountriesContext";
 import Message from "../components/Message";
+import CountryDetailsSkeleton from "../components/CountryDetailsSkeleton";
 
 const CountryDetails = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const CountryDetails = () => {
 
   if (error) return <Message message={error} />;
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <CountryDetailsSkeleton />;
   return (
     <Wrapper className="px-0 md:py-12">
       <button
@@ -76,17 +77,21 @@ const CountryDetails = () => {
             </div>
 
             <div>
-              <p>
-                Top level domain:
-                <span className="font-extralight px-1">{country?.tld}</span>
-              </p>
+              {country?.tld && (
+                <p>
+                  Top level domain:
+                  <span className="font-extralight px-1">{country?.tld}</span>
+                </p>
+              )}
 
-              <p>
-                currencies:
-                <span className="font-extralight px-1">
-                  {country?.currencies.join(", ")}
-                </span>
-              </p>
+              {country?.currencies?.length ? (
+                <p>
+                  currencies:
+                  <span className="font-extralight px-1">
+                    {country?.currencies.join(", ")}
+                  </span>
+                </p>
+              ) : null}
               <p>
                 Languages:
                 <span className="font-extralight px-1">

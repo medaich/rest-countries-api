@@ -3,17 +3,17 @@ import { ApiCountry, Country } from "../contexts/CountriesContext";
 
 interface ApiCountryDetailed extends ApiCountry {
   subregion?: string;
-  borders: string[];
-  tld: string[];
-  currencies: { [currencyCode: string]: { name: string; symbol: string } };
+  borders?: string[];
+  tld?: string[];
+  currencies?: { [currencyCode: string]: { name: string; symbol: string } };
   languages: { [languageCode: string]: string };
 }
 
 interface CountryDetailed extends Country {
   nativeName: string;
   subregion: string;
-  tld: string;
-  currencies: string[];
+  tld?: string;
+  currencies?: string[];
   languages: string[];
   borders?: string[];
 }
@@ -51,16 +51,18 @@ export function useGetCountry(countryId?: string) {
               url: countryApi.flags.svg,
               alt: `flag of ${countryApi.name.official}`,
             },
-            currencies: Object.values(countryApi.currencies).map(
-              (curr) => curr.name
-            ),
+            currencies:
+              countryApi.currencies &&
+              Object.values(countryApi.currencies).map((curr) => curr.name),
             subregion: countryApi?.subregion || "unknown",
-            tld: countryApi.tld[0],
+            tld: countryApi.tld && countryApi.tld[0],
             languages: Object.values(countryApi.languages),
             nativeName: Object.values(countryApi.name.nativeName)[0].common,
             borders: countryApi.borders,
           });
         } catch (error) {
+          console.error(error);
+
           if (error instanceof Error) setError(error.message);
           else setError("Unknown error occured");
         } finally {
