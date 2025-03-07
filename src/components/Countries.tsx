@@ -13,8 +13,8 @@ const Countries = () => {
     <section>
       <h2 className="sr-only">Countries</h2>
 
-      <ul>
-        <Wrapper className="px-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+      <Wrapper className="px-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+        <ul>
           {isLoading
             ? Array(8)
                 .fill(0)
@@ -22,8 +22,8 @@ const Countries = () => {
             : countries.map((country) => (
                 <Country country={country} key={country.countryId} />
               ))}
-        </Wrapper>
-      </ul>
+        </ul>
+      </Wrapper>
     </section>
   );
 };

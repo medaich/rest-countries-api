@@ -33,7 +33,7 @@ const Header = () => {
             fill={isDark ? "currentColor" : "transparent"}
           />
           {/* <Moon strokeWidth={1.5} className="w-6 max-sm:w-4 fill="currentColor" /> for dark mode */}
-          <p>Dark Mode</p>
+          <span>Dark Mode</span>
         </button>
       </Wrapper>
     </header>

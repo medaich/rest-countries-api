@@ -106,14 +106,14 @@ const CountryDetails = () => {
               <p>Border Countries:</p>
               <ul className="flex gap-x-2">
                 {country?.borders?.map((countryId) => (
-                  <Link to={`/country/${countryId}`}>
-                    <li
+                  <li key={countryId}>
+                    <Link
                       className="bg-white dark:bg-dark-blue px-2 py-1 rounded shadow-md font-extralight text-xs"
-                      key={countryId}
+                      to={`/country/${countryId}`}
                     >
                       {getCountryById(countryId)?.name}
-                    </li>
-                  </Link>
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
