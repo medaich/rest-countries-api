@@ -2,6 +2,7 @@ import { Moon } from "lucide-react";
 import Wrapper from "./Wrapper";
 import { useEffect } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { Link } from "react-router";
 
 const Header = () => {
   const [isDark, setIsDark] = useLocalStorage<boolean>(false, "darkTheme");
@@ -17,9 +18,11 @@ const Header = () => {
   return (
     <header className="bg-white dark:bg-dark-blue shadow">
       <Wrapper className="flex items-center justify-between">
-        <h1 className="font-extrabold text-2xl max-sm:text-base">
-          Where in the world?
-        </h1>
+        <Link to="/">
+          <h1 className="font-extrabold text-2xl max-sm:text-base">
+            Where in the world?
+          </h1>
+        </Link>
         <button
           className="flex items-center gap-2"
           onClick={() => setIsDark((isDark) => !isDark)}

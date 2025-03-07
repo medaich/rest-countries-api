@@ -3,13 +3,13 @@ import { Country as CountryType } from "../contexts/CountriesContext";
 
 const Country = ({ country }: { country: CountryType }) => {
   return (
-    <li className="rounded-md shadow-md">
+    <li className="rounded shadow-md">
       <Link to={`/country/${country.countryId}`}>
         <div className="h-40">
           <img
             src={country.flag.url}
             alt={country.flag.alt}
-            className="size-full object-cover shadow-md"
+            className="size-full object-cover shadow-md rounded"
           />
         </div>
         <div className="p-4 mb-6">

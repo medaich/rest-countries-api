@@ -1,11 +1,14 @@
 import { useCountries } from "../contexts/CountriesContext";
 import Country from "./Country";
+import Message from "./Message";
 import Wrapper from "./Wrapper";
 
 const Countries = () => {
-  const { countries, error } = useCountries();
+  const { countries, error, isLoading } = useCountries();
 
-  console.error(error);
+  if (error) return <Message message={error} />;
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <section>

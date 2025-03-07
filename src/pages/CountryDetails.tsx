@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import Wrapper from "../components/Wrapper";
 import { useGetCountry } from "../hooks/useGetCountry";
 import { useCountries } from "../contexts/CountriesContext";
+import Message from "../components/Message";
 
 const CountryDetails = () => {
   const navigate = useNavigate();
@@ -12,15 +13,9 @@ const CountryDetails = () => {
 
   const { getCountryById } = useCountries();
 
+  if (error) return <Message message={error} />;
+
   if (isLoading) return <p>Loading...</p>;
-
-  if (!countryId) {
-    navigate("/");
-    return;
-  }
-
-  if (error) console.error(error);
-
   return (
     <Wrapper className="px-0 md:py-12">
       <button

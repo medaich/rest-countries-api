@@ -10,6 +10,7 @@ import {
 interface CountriesContextType {
   countries: Country[];
   error: string;
+  isLoading: boolean;
   setRegion: React.Dispatch<React.SetStateAction<Region>>;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   getCountryById: (countryId: string) => Country | undefined;
@@ -65,6 +66,7 @@ const CountriesContext = createContext<CountriesContextType | undefined>(
 export function CountriesProvider({ children }: { children: ReactNode }) {
   const [countries, setCountries] = useState<Country[]>([]);
   const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [region, setRegion] = useState<Region>("All"); //Filter by region
   const [query, setQuery] = useState<string>(""); // Search query
@@ -89,6 +91,8 @@ export function CountriesProvider({ children }: { children: ReactNode }) {
   useEffect(function () {
     async function getCountries() {
       try {
+        setIsLoading(true);
+
         const fetched = await fetch(
           "https://restcountries.com/v3.1/all?fields=cca3,name,region,population,capital,flags"
         );
@@ -117,6 +121,8 @@ export function CountriesProvider({ children }: { children: ReactNode }) {
       } catch (error: unknown) {
         if (error instanceof Error) setError(error.message);
         else setError("Unknown error occured");
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -128,6 +134,7 @@ export function CountriesProvider({ children }: { children: ReactNode }) {
       value={{
         countries: displayedCountries,
         error,
+        isLoading,
         setRegion,
         setQuery,
         getCountryById,
