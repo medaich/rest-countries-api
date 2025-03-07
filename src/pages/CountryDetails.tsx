@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import Wrapper from "../components/Wrapper";
 import { useGetCountry } from "../hooks/useGetCountry";
 import { useCountries } from "../contexts/CountriesContext";
@@ -106,12 +106,14 @@ const CountryDetails = () => {
               <p>Border Countries:</p>
               <ul className="flex gap-x-2">
                 {country?.borders?.map((countryId) => (
-                  <li
-                    className="bg-white dark:bg-dark-blue px-2 py-1 rounded shadow-md font-extralight text-xs"
-                    key={countryId}
-                  >
-                    {getCountryById(countryId)?.name}
-                  </li>
+                  <Link to={`/country/${countryId}`}>
+                    <li
+                      className="bg-white dark:bg-dark-blue px-2 py-1 rounded shadow-md font-extralight text-xs"
+                      key={countryId}
+                    >
+                      {getCountryById(countryId)?.name}
+                    </li>
+                  </Link>
                 ))}
               </ul>
             </div>
