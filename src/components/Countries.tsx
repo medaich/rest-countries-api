@@ -13,8 +13,8 @@ const Countries = () => {
     <section>
       <h2 className="sr-only">Countries</h2>
 
-      <Wrapper className="px-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
-        <ul>
+      <Wrapper className="px-0">
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
           {isLoading
             ? Array(8)
                 .fill(0)
